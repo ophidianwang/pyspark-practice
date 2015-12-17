@@ -35,6 +35,7 @@ with open(source_path, "r") as source_file:
         
 """
 should I weight vertex on how many edge does it have, and weight edges by the two vertex?
+maybe use the concept of pagerank? total node weight set to 1, give each edge weight (1/edge_num_of_node)
 If so:
 1. parse all edge record and accumulate vertex weight
 2. assign edge weight by vertex weight
