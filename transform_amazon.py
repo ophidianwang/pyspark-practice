@@ -30,8 +30,12 @@ with open(source_path, "r") as source_file:
         else:
             vertex_accumulate[ two_vertex[1] ] = 1
         edge_list.append( tuple( two_vertex ) )
-        #if n>edge_limit:
-            #break
+        if (n%1000)==0:
+            print("working on " + str(n) + "th edge.")
+        if n>edge_limit:
+            break
+    else:
+        print("edge parsing done.")
         
 """
 should I weight vertex on how many edge does it have, and weight edges by the two vertex?
@@ -42,22 +46,30 @@ If so:
 3. assign to networkx/spark link analysis model
 """
 vertex_weight = {}
-for vertex_id in vertex_accumulate:
+for n,vertex_id in enumerate(vertex_accumulate):
     vertex_weight[ vertex_id ] = 1.0/vertex_accumulate[ vertex_id ]
-#print(vertex_accumulate)
-print(vertex_weight)
+    if (n%1000)==0:
+        print("weighting on " + str(n) + "th vertex.")
+else:
+    print("all vertexes are weighted")
+    #print(vertex_accumulate)
+    #print(vertex_weight)
 
 edge_weight_list = []
 edge_weight_pool = []
-for pro,copro in edge_list:
+for n,(pro,copro) in enumerate(edge_list):
     edge_weight = (vertex_weight[pro] + vertex_weight[copro])
     edge_weight_list.append( [pro, copro, edge_weight] )
     edge_weight_pool.append( edge_weight )
-print(edge_weight_list)
+    if (n%1000)==0:
+        print("weighting on " + str(n) + "th edge.")
+else:
+    print("all edges are weighted")
+    #print(edge_weight_list)
 
 parse_done_time = datetime.datetime.now();
-print( "spend " + str( parse_done_time.timestamp() - start_time.timestamp() ) + " sec. on parsing source file.\n" )
-
+print( "spend " + str( parse_done_time.timestamp() - start_time.timestamp() ) + \
+    " sec. on parsing source file and weighting edges.\n" )
 
 #start writing to file
 print("output start")
@@ -65,5 +77,8 @@ transformed_path = "D:\\PyWorkspace\\Amazon20030601_transform.txt"
 with open(transformed_path,"w") as transformed_file:
     for i, edge in enumerate( edge_weight_list ):
         transformed_file.write( " ".join( map(str,edge) ) + "\n" )
+        if (i%1000)==0:
+            print("working on " + str(i) + "th edge.")
+    else:
+        print("all weighted edge output done.")
         
-print("output done.")
