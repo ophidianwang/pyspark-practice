@@ -12,11 +12,10 @@ from pyspark.mllib.clustering import PowerIterationClustering, PowerIterationClu
 
 #start working with spark
 app_name = "PIC_Amazon_20030601"
-master = "spark_url"
 source_path = "/home/ophidian/dataset/Amazon20030601_transform.txt"
 my_model_path = "/home/ophidian/pyspark_models"
 
-conf = SparkConf().setAppName(app_name).setMaster(master)
+conf = SparkConf().setAppName(app_name)
 sc = SparkContext(conf=conf)
 
 """
