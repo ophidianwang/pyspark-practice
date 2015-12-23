@@ -13,7 +13,8 @@ from pyspark.mllib.clustering import PowerIterationClustering, PowerIterationClu
 #start working with spark
 app_name = "PIC_Amazon_20030601"
 source_path = "/home/ophidian/dataset/Amazon20030601_transform.txt"
-my_model_path = "/home/ophidian/pyspark_models"
+my_model_path = "/home/ophidian/pyspark_models/PIC_amazon0601"
+out_path = "home/ophidian/pyspark_results/PIC_amazon0601.result"
 
 conf = SparkConf().setAppName(app_name)
 sc = SparkContext(conf=conf)
@@ -32,7 +33,9 @@ weighted_edges = data.map(lambda line: tuple([float(x) for x in line.split(' ')]
 # Cluster the data into 10 classes using PowerIterationClustering
 model = PowerIterationClustering.train(weighted_edges, 10, 100)
 
-model.assignments().foreach(lambda x: print(str(x.id) + " -> " + str(x.cluster)))
+#model.assignments().foreach(lambda x: print(str(x.id) + " -> " + str(x.cluster)))
+with open(out_path,"w") as out_file:
+    model.assignments().foreach(lambda x: out_file.write(str(x.id) + " -> " + str(x.cluster)) + "\n" )
 
 # Save and load model
 model.save(sc, my_model_path)
