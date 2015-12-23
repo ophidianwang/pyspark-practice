@@ -65,13 +65,16 @@ def intraSequence(data_frame):
     for name, group in grouped:
         #print(name)
         #print(group)
+        """
         if group.shape[0] == 1:
             continue
         else:
             print(list(group.RECORD_OPENING_TIME))
             continue
+        """
     
         record_list = []
+        #return list? or should return a dataframe that contains time with which can sort records?
         site_name_list = []  #list(group.SITE_NAME)
         county_list = []    #list(group.COUNTY)
         district_list = []  #list(group.DISTRICT)
