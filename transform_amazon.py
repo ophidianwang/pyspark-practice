@@ -15,7 +15,7 @@ edge_list = []
 vertex_accumulate = {}
 edge_limit = 3000
 
-source_path = "D:\\dataset\\Amazon0601.txt"
+source_path = "/home/ophidian/dataset/Amazon0601.txt"
 with open(source_path, "r") as source_file:
     for n,line in enumerate( source_file.readlines() ):
         if line[0] == "#":
@@ -73,7 +73,7 @@ print( "spend " + str( parse_done_time.timestamp() - start_time.timestamp() ) + 
 
 #start writing to file
 print("output start")
-transformed_path = "D:\\PyWorkspace\\Amazon20030601_transform.txt"
+transformed_path = "/home/ophidian/dataset/Amazon20030601_transform.txt"
 with open(transformed_path,"w") as transformed_file:
     for i, edge in enumerate( edge_weight_list ):
         transformed_file.write( " ".join( map(str,edge) ) + "\n" )
